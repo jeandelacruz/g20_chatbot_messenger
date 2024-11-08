@@ -1,0 +1,25 @@
+{
+    "object": "page",
+    "entry": [
+        {
+            "time": 1730951408797,
+            "id": "503673102821306",
+            "messaging": [
+                {
+                    "sender": {
+                        "id": "8555525587857325"
+                    },
+                    "recipient": {
+                        "id": "503673102821306"
+                    },
+                    "timestamp": 1730951406807,
+                    "postback": {
+                        "title": "Get Started",
+                        "payload": "GET_STARTED_PAYLOAD",
+                        "mid": "m_4f9O8RStdKfD_WjJA3xyc3ihx-F1c7xRJleLH213WIkoKtZplpxB1PI2CJiy40Ijvjm7An-oBOaWxNqXYtNWoA"
+                    }
+                }
+            ]
+        }
+    ]
+}

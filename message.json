@@ -1,0 +1,24 @@
+{
+    "object": "page",
+    "entry": [
+        {
+            "time": 1730951646359,
+            "id": "503673102821306",
+            "messaging": [
+                {
+                    "sender": {
+                        "id": "8555525587857325"
+                    },
+                    "recipient": {
+                        "id": "503673102821306"
+                    },
+                    "timestamp": 1730951645791,
+                    "message": {
+                        "mid": "m_HcWNG0a3Hcan545692zWzXihx-F1c7xRJleLH213WInRBU1ID8tOE1R0kzJZZJmdg3aXZwWId7ddGRxQgInYSQ",
+                        "text": "Hola !"
+                    }
+                }
+            ]
+        }
+    ]
+}
