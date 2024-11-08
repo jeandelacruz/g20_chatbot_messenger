@@ -1,0 +1,27 @@
+{
+    "object": "page",
+    "entry": [
+        {
+            "time": 1731027335808,
+            "id": "503673102821306",
+            "messaging": [
+                {
+                    "sender": {
+                        "id": "8555525587857325"
+                    },
+                    "recipient": {
+                        "id": "503673102821306"
+                    },
+                    "timestamp": 1731027335227,
+                    "message": {
+                        "mid": "m_hOi1ysRKwbE_EsD_mXppFHihx-F1c7xRJleLH213WInUp8zfZeBGDTmDHxceQG6Mo7z4rer-LjMERZk1ZbnQxg",
+                        "text": "Conversar",
+                        "quick_reply": {
+                            "payload": "TALK_MESSAGE"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

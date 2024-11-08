@@ -1,16 +1,16 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from django.conf import settings
-from .utils.apigraph import ApiGraph
+from .utils.flows import FlowMethods
 
-apigraph = ApiGraph()
+flow = FlowMethods()
 
 
 class SetupView(generics.GenericAPIView):
     http_method_names = ['get']
 
     def get(self, request):
-        response = apigraph.setup()
+        response = flow.apigraph.setup()
         return Response(data=response, status=status.HTTP_200_OK)
 
 
@@ -34,5 +34,46 @@ class WebhookView(generics.GenericAPIView):
             messaging = entry['messaging']
             for message in messaging:
                 sender_id = message['sender']['id']
-                apigraph.send_message(sender_id, {'text': 'Que hace ?'})
+                postback = message.get('postback')
+                messages = message.get('message')
+
+                if postback:
+                    # TODO: Mensajes con accion
+                    self.postback_event(sender_id, postback)
+                else:
+                    # TODO: Mensaje plano
+                    self.message_event(sender_id, messages)
         return Response(status=status.HTTP_200_OK)
+
+    def postback_event(self, sender_id, postback):
+        payload = postback.get('payload')
+
+        if payload == 'GET_STARTED_PAYLOAD':
+            # TODO: Saludar al usuario
+            return flow.welcome_message(sender_id)
+
+    def message_event(self, sender_id, message):
+        quick_reply = message.get('quick_reply')
+
+        if quick_reply:
+            # TODO: Respuestas rapidas
+            return self.quick_reply_event(sender_id, quick_reply)
+
+        # TODO: Capturar mensaje plano
+        text = message.get('text')
+        print(text)
+
+        # TODO: Reenviar las opciones al usuario
+        return flow.retry_options_message(sender_id)
+
+    def quick_reply_event(self, sender_id, quick_reply):
+        payload = quick_reply.get('payload')
+
+        if payload == 'SEARCH_MUSIC':
+            return flow.search_music_message(sender_id)
+
+        if payload == 'TALK_MESSAGE':
+            flow.talk_chat_message(sender_id)
+
+        # TODO: Reenviar las opciones al usuario
+        return flow.retry_options_message(sender_id)

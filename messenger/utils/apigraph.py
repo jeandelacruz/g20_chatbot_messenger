@@ -32,6 +32,8 @@ class ApiGraph:
         )
         return response.json()
 
+    # https://developers.facebook.com/docs/messenger-platform/reference/send-api/
+    # https://developers.facebook.com/docs/messenger-platform/send-messages/
     def send_message(self, recipient_id, body):
         response = post(
             f'{self.host}/v21.0/me/messages',
@@ -48,3 +50,13 @@ class ApiGraph:
             }
         )
         return response.json()
+
+    # https://developers.facebook.com/docs/messenger-platform/reference/buttons/quick-replies
+    def send_quick_replies(self, recipient_id, message, options):
+        return self.send_message(
+            recipient_id,
+            {
+                'text': message,
+                'quick_replies': options
+            }
+        )
