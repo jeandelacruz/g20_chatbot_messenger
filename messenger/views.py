@@ -1,6 +1,7 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from django.conf import settings
+from time import sleep
 from .utils.flows import FlowMethods
 
 flow = FlowMethods()
@@ -37,6 +38,11 @@ class WebhookView(generics.GenericAPIView):
                 postback = message.get('postback')
                 messages = message.get('message')
 
+                flow.apigraph.send_action(sender_id, 'mark_seen')
+                sleep(1)
+                flow.apigraph.send_action(sender_id, 'typing_on')
+                sleep(1)
+
                 if postback:
                     # TODO: Mensajes con accion
                     self.postback_event(sender_id, postback)
@@ -46,6 +52,7 @@ class WebhookView(generics.GenericAPIView):
         return Response(status=status.HTTP_200_OK)
 
     def postback_event(self, sender_id, postback):
+        flow.apigraph.send_action(sender_id, 'typing_off')
         payload = postback.get('payload')
 
         if payload == 'GET_STARTED_PAYLOAD':
@@ -53,6 +60,7 @@ class WebhookView(generics.GenericAPIView):
             return flow.welcome_message(sender_id)
 
     def message_event(self, sender_id, message):
+        flow.apigraph.send_action(sender_id, 'typing_off')
         quick_reply = message.get('quick_reply')
 
         if quick_reply:
@@ -61,7 +69,9 @@ class WebhookView(generics.GenericAPIView):
 
         # TODO: Capturar mensaje plano
         text = message.get('text')
-        print(text)
+
+        # TODO: Buscar la musica en Spotify
+        flow.response_music(sender_id, text)
 
         # TODO: Reenviar las opciones al usuario
         return flow.retry_options_message(sender_id)
@@ -77,3 +87,6 @@ class WebhookView(generics.GenericAPIView):
 
         # TODO: Reenviar las opciones al usuario
         return flow.retry_options_message(sender_id)
+
+
+# sender_id, action

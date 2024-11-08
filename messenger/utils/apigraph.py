@@ -60,3 +60,20 @@ class ApiGraph:
                 'quick_replies': options
             }
         )
+
+    # https://developers.facebook.com/docs/messenger-platform/send-messages/sender-actions/
+    def send_action(self, recipient_id, action):
+        response = post(
+            f'{self.host}/v21.0/me/messages',
+            params={
+                'access_token': self.access_token
+            },
+            headers=self.headers,
+            json={
+                'recipient': {
+                    'id': recipient_id
+                },
+                'sender_action': action
+            }
+        )
+        return response.json()
